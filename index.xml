@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>松林&#39;s blog</title>
-    <link>http://example.org/</link>
+    <link>http://iiweb.cn/</link>
     <description>不以物喜,不以己悲</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 08 Feb 2023 15:39:12 &#43;0800</lastBuildDate>
-      <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+      <atom:link href="http://iiweb.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>第一篇文章</title>
-  <link>http://example.org/posts/first_post/</link>
+  <link>http://iiweb.cn/posts/2023-02-08-first-post/</link>
   <pubDate>Wed, 08 Feb 2023 15:39:12 &#43;0800</pubDate>
   <author>songlin</author>
-  <guid>http://example.org/posts/first_post/</guid>
+  <guid>http://iiweb.cn/posts/2023-02-08-first-post/</guid>
   <description><![CDATA[初衷 以前用wordpress创建过个人博客,坚持更新几年后关站停更,在一个偶然的时间,发现了之前博客的数据库,翻看留言内容,思绪万千.觉得需]]></description>
 </item>
 </channel>
