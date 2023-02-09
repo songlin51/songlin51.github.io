@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>内容 - 标签 - FixIt</title>
+    <link>https://fixit.lruihao.cn/tags/content/</link>
+    <description>内容 - 标签 - FixIt</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>songlin51@foxmail.com (songlin)</managingEditor>
+      <webMaster>songlin51@foxmail.com (songlin)</webMaster><atom:link href="https://fixit.lruihao.cn/tags/content/" rel="self" type="application/rss+xml" /><item>
+  <title>主题文档 - 内容</title>
+  <link>https://fixit.lruihao.cn/theme-documentation-content/</link>
+  <pubDate>Sun, 19 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/theme-documentation-content/</guid>
+  <description><![CDATA[<p>了解如何在 <strong>FixIt</strong> 主题中快速，直观地创建和组织内容。</p>]]></description>
+</item>
+</channel>
+</rss>

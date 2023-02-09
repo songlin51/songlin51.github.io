@@ -1,0 +1,15 @@
+https://fixit.lruihao.cn/theme-documentation-basics/
+https://fixit.lruihao.cn/theme-documentation-content/
+https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/
+https://fixit.lruihao.cn/extended-shortcode-typeit/
+https://fixit.lruihao.cn/extended-shortcode-bilibili/
+https://fixit.lruihao.cn/extended-shortcode-mapbox/
+https://fixit.lruihao.cn/extended-shortcode-echarts/
+https://fixit.lruihao.cn/extended-shortcode-mermaid/
+https://fixit.lruihao.cn/theme-documentation-content-encryption/
+https://fixit.lruihao.cn/basic-markdown-syntax/
+https://fixit.lruihao.cn/emoji-support/
+https://fixit.lruihao.cn/help/
+https://fixit.lruihao.cn/about/
+https://fixit.lruihao.cn/offline/
+https://fixit.lruihao.cn/friends/

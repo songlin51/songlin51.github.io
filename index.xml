@@ -1,17 +1,93 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>松林&#39;s blog</title>
-    <link>http://iiweb.cn/</link>
-    <description>不以物喜,不以己悲</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 08 Feb 2023 15:39:12 &#43;0800</lastBuildDate>
-      <atom:link href="http://iiweb.cn/index.xml" rel="self" type="application/rss+xml" />
+    <title>FixIt</title>
+    <link>https://fixit.lruihao.cn/</link>
+    <description>松林博客</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>songlin51@foxmail.com (songlin)</managingEditor>
+      <webMaster>songlin51@foxmail.com (songlin)</webMaster><lastBuildDate>Wed, 20 Jul 2022 13:56:03 &#43;0800</lastBuildDate>
+      <atom:link href="https://fixit.lruihao.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
-  <title>第一篇文章</title>
-  <link>http://iiweb.cn/posts/2023-02-08-first-post/</link>
-  <pubDate>Wed, 08 Feb 2023 15:39:12 &#43;0800</pubDate>
+  <title>主题文档 - 基本概念</title>
+  <link>https://fixit.lruihao.cn/theme-documentation-basics/</link>
+  <pubDate>Sun, 19 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/theme-documentation-basics/</guid>
+  <description><![CDATA[<p>探索 Hugo - <strong>FixIt</strong> 主题的全部内容和背后的核心概念。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 内容</title>
+  <link>https://fixit.lruihao.cn/theme-documentation-content/</link>
+  <pubDate>Sun, 19 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/theme-documentation-content/</guid>
+  <description><![CDATA[<p>了解如何在 <strong>FixIt</strong> 主题中快速，直观地创建和组织内容。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 内置 Shortcodes</title>
+  <link>https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/</link>
+  <pubDate>Sun, 19 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/</guid>
+  <description><![CDATA[<p><strong>Hugo</strong> 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 扩展 Shortcode - typeit</title>
+  <link>https://fixit.lruihao.cn/extended-shortcode-typeit/</link>
+  <pubDate>Wed, 20 Jul 2022 13:56:03 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/extended-shortcode-typeit/</guid>
+  <description><![CDATA[<p><code>typeit</code> shortcode 基于 <a href="https://typeitjs.com/"target="_blank" rel="external nofollow noopener noreferrer">TypeIt<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 提供了打字动画。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 扩展 Shortcode - bilibili</title>
+  <link>https://fixit.lruihao.cn/extended-shortcode-bilibili/</link>
+  <pubDate>Wed, 20 Jul 2022 13:55:03 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/extended-shortcode-bilibili/</guid>
+  <description><![CDATA[<a href="https://github.com/hugo-fixit/FixIt/releases/tag/v0.2.0" rel="external nofollow noopener noreferrer" target="_blank"></a>
+<p><code>bilibili</code> shortcode 提供了一个内嵌的用来播放 bilibili 视频的响应式播放器。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 扩展 Shortcode - mapbox</title>
+  <link>https://fixit.lruihao.cn/extended-shortcode-mapbox/</link>
+  <pubDate>Wed, 20 Jul 2022 12:22:15 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/extended-shortcode-mapbox/</guid>
+  <description><![CDATA[<a href="https://github.com/hugo-fixit/FixIt/releases/tag/v0.2.0" rel="external nofollow noopener noreferrer" target="_blank"></a>
+<p><code>mapbox</code> shortcode 使用 <a href="https://docs.mapbox.com/mapbox-gl-js"target="_blank" rel="external nofollow noopener noreferrer">Mapbox GL JS<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 库提供互动式地图的功能。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 扩展 Shortcode - echarts</title>
+  <link>https://fixit.lruihao.cn/extended-shortcode-echarts/</link>
+  <pubDate>Wed, 20 Jul 2022 11:44:15 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/extended-shortcode-echarts/</guid>
+  <description><![CDATA[<p><code>echarts</code> shortcode 使用 <a href="https://echarts.apache.org/"target="_blank" rel="external nofollow noopener noreferrer">ECharts<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 库提供数据可视化的功能。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 扩展 Shortcode - mermaid</title>
+  <link>https://fixit.lruihao.cn/extended-shortcode-mermaid/</link>
+  <pubDate>Sat, 09 Jul 2022 17:20:15 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/extended-shortcode-mermaid/</guid>
+  <description><![CDATA[<a href="https://github.com/hugo-fixit/FixIt/releases/tag/v0.2.15" rel="external nofollow noopener noreferrer" target="_blank"></a>
+<p><code>mermaid</code> shortcode 使用 <a href="https://mermaidjs.github.io/"target="_blank" rel="external nofollow noopener noreferrer">Mermaid<i class="fa-solid fa-external-link-alt fa-fw fa-xs ms-1 text-secondary" aria-hidden="true"></i></a> 库提供绘制图表和流程图的功能。</p>]]></description>
+</item>
+<item>
+  <title>主题文档 - 内容加密</title>
+  <link>https://fixit.lruihao.cn/theme-documentation-content-encryption/</link>
+  <pubDate>Sat, 28 May 2022 11:51:41 &#43;0800</pubDate>
+  <author>Lruihao</author>
+  <guid>https://fixit.lruihao.cn/theme-documentation-content-encryption/</guid>
+  <description><![CDATA[<p>了解如何在 FixIt 主题中加密内容。</p>]]></description>
+</item>
+<item>
+  <title>Markdown 基本语法</title>
+  <link>https://fixit.lruihao.cn/basic-markdown-syntax/</link>
+  <pubDate>Sat, 18 Dec 2021 16:15:22 &#43;0800</pubDate>
   <author>songlin</author>
-  <guid>http://iiweb.cn/posts/2023-02-08-first-post/</guid>
-  <description><![CDATA[初衷 以前用wordpress创建过个人博客,坚持更新几年后关站停更,在一个偶然的时间,发现了之前博客的数据库,翻看留言内容,思绪万千.觉得需]]></description>
+  <guid>https://fixit.lruihao.cn/basic-markdown-syntax/</guid>
+  <description><![CDATA[<p>这篇文章提供了可以在 Hugo 的文章中使用的基本 Markdown 语法示例。</p>]]></description>
 </item>
 </channel>
 </rss>
