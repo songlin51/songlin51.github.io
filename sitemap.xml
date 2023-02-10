@@ -4,14 +4,14 @@
   ><url>
       <loc>https://fixit.lruihao.cn/theme-documentation-basics/</loc><lastmod>2023-02-09T18:06:33&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/theme-documentation-content/</loc><lastmod>2023-02-09T18:06:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/</loc><lastmod>2023-02-09T18:06:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/categories/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/categories/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/posts/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/categories/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/categories/</loc><lastmod>2023-02-10T13:58:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/posts/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/shortcodes/</loc><lastmod>2023-02-09T18:07:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/tags/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/tags/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/</loc><lastmod>2023-02-10T13:58:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/extended-shortcode-typeit/</loc><lastmod>2023-02-09T18:03:59&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/extended-shortcode-bilibili/</loc><lastmod>2023-02-09T18:07:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/extended-shortcode-mapbox/</loc><lastmod>2023-02-09T18:02:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -19,19 +19,19 @@
       <loc>https://fixit.lruihao.cn/extended-shortcode-mermaid/</loc><lastmod>2023-02-09T18:03:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/theme-documentation-content-encryption/</loc><lastmod>2023-02-09T18:06:52&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/markdown/</loc><lastmod>2023-02-09T18:06:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/tags/golang/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/tags/golang/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/categories/golang/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/html/</loc><lastmod>2023-02-09T18:06:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/categories/language/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/categories/markdown/</loc><lastmod>2023-02-09T18:06:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/basic-markdown-syntax/</loc><lastmod>2023-02-09T18:06:00&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/tags/%E5%B9%B6%E5%8F%91/</loc><lastmod>2023-02-10T13:50:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/tags/%E5%B9%B6%E5%8F%91/</loc><lastmod>2023-02-10T13:58:49&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/emoji/</loc><lastmod>2022-01-19T19:48:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://fixit.lruihao.cn/emoji-support/</loc><lastmod>2022-01-19T19:48:28&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
       <loc>https://fixit.lruihao.cn/help/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/about/</loc><lastmod>2023-02-09T17:40:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/offline/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+      <loc>https://fixit.lruihao.cn/categories/golang/</loc><lastmod>2023-02-10T13:58:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/installation/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-      <loc>https://fixit.lruihao.cn/categories/language/</loc><lastmod>2023-02-10T13:38:05&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/categories/test/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/test/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
       <loc>https://fixit.lruihao.cn/tags/print/</loc><lastmod>2023-02-09T14:43:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

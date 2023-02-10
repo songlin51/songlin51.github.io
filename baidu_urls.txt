@@ -13,5 +13,5 @@ https://fixit.lruihao.cn/emoji-support/
 https://fixit.lruihao.cn/help/
 https://fixit.lruihao.cn/about/
 https://fixit.lruihao.cn/offline/
-https://fixit.lruihao.cn/categories/language/
+https://fixit.lruihao.cn/categories/golang/
 https://fixit.lruihao.cn/friends/
