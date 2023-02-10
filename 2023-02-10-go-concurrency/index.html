@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Golang 并发编程 - 松林&#39;s blog</title><meta name="author" content="songlin">
+<meta name="author-link" content="https://iiweb.cn">
+<meta name="description" content="介绍golang并发编程" /><meta name="keywords" content='golang, 并发' /><meta itemprop="name" content="Golang 并发编程">
+<meta itemprop="description" content="介绍golang并发编程"><meta itemprop="datePublished" content="2021-12-18T16:15:22+08:00" />
+<meta itemprop="dateModified" content="2023-02-10T13:50:50+08:00" />
+<meta itemprop="wordCount" content="6096"><meta itemprop="image" content="https://fixit.lruihao.cn/logo.png"/>
+<meta itemprop="keywords" content="golang,并发," /><meta property="og:title" content="Golang 并发编程" />
+<meta property="og:description" content="介绍golang并发编程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" /><meta property="og:image" content="https://fixit.lruihao.cn/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-18T16:15:22+08:00" />
+<meta property="article:modified_time" content="2023-02-10T13:50:50+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://fixit.lruihao.cn/logo.png"/>
+
+<meta name="twitter:title" content="Golang 并发编程"/>
+<meta name="twitter:description" content="介绍golang并发编程"/>
+<meta name="application-name" content="松林&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="松林&#39;s blog"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" /><link rel="prev" href="https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/" /><link rel="next" href="https://fixit.lruihao.cn/theme-documentation-content/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Golang 并发编程",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https:\/\/fixit.lruihao.cn\/2023-02-10-go-concurrency\/"
+    },"image": [{
+              "@type": "ImageObject",
+              "url": "https:\/\/fixit.lruihao.cn\/images\/Apple-Devices-Preview.jpg",
+              "width":  1842 ,
+              "height":  1036 
+            }],"genre": "posts","keywords": "golang, 并发","wordcount":  6096 ,
+    "url": "https:\/\/fixit.lruihao.cn\/2023-02-10-go-concurrency\/","datePublished": "2021-12-18T16:15:22+08:00","dateModified": "2023-02-10T13:50:50+08:00","publisher": {
+      "@type": "Organization",
+      "name": "Lruihao","logo": {
+          "@type": "ImageObject",
+          "url": "https:\/\/fixit.lruihao.cn\/images\/avatar.png",
+          "width":  528 ,
+          "height":  560 
+        }},"author": {
+        "@type": "Person",
+        "name": "songlin"
+      },"description": "介绍golang并发编程"
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper" data-github-corner="right">
+    <div class="header-title">
+      <a href="/" title="松林&#39;s blog"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="松林&#39;s blog"
+    title="松林&#39;s blog" width="400" height="400"/><span class="header-title-text">松林&#39;s blog</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li class="menu-item has-children">
+              <a
+                class="menu-link"
+                href="/categories/documentation/"
+                title="主题文档"
+                
+              ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> 文档</a><i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-basics/"
+                          title="探索 Hugo - FixIt 主题的全部内容和背后的核心概念。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 基本概念</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-content/"
+                          title="了解如何在 FixIt 主题中快速，直观地创建和组织内容。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内容</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-built-in-shortcodes/"
+                          title="Hugo 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内置 Shortcodes</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/emoji-support/"
+                          title="Hugo 和 FixIt 中的 Emoji 的用法指南。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - Emoji 支持</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-content-encryption/"
+                          title="了解如何在 FixIt 主题中加密内容。"
+                          
+                        ><i class="fa-solid fa-lock fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内容加密</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-bilibili/"
+                          title="bilibili shortcode 提供了一个内嵌的用来播放 bilibili 视频的响应式播放器。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - bilibili</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-echarts/"
+                          title="echarts shortcode 使用 ECharts 库提供数据可视化的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - echarts</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-mapbox/"
+                          title="mapbox shortcode 使用 Mapbox GL JS 库提供互动式地图的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - mapbox</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-mermaid/"
+                          title="mermaid shortcode 使用 Mermaid 库提供绘制图表和流程图的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - mermaid</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-typeit/"
+                          title="typeit shortcode 基于 TypeIt 提供了打字动画。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - typeit</a>
+                      </li></ul></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/friends/"
+                title="友情链接"
+                
+              ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/about/"
+                
+                
+              ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="松林&#39;s blog"><img
+    class="lazyload logo"
+    src="/svg/loading.min.svg"
+    data-src="/images/avatar.jpeg"
+    data-srcset="/images/avatar.jpeg, /images/avatar.jpeg 1.5x, /images/avatar.jpeg 2x"
+    data-sizes="auto"
+    alt="/images/avatar.jpeg"
+    title="/images/avatar.jpeg" width="400" height="400"/><span class="header-title-text">松林&#39;s blog</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                ><i class="fa-solid fa-archive fa-fw fa-sm" aria-hidden="true"></i> 所有文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                ><i class="fa-solid fa-th fa-fw fa-sm" aria-hidden="true"></i> 分类</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                ><i class="fa-solid fa-tags fa-fw fa-sm" aria-hidden="true"></i> 标签</a></li><li
+              class="menu-item"
+            ><span class="nested-item">
+                  <a
+                    class="menu-link"
+                    href="/categories/documentation/"
+                    title="主题文档"
+                    
+                  ><i class="fa-solid fa-book fa-fw fa-sm" aria-hidden="true"></i> 文档</a>
+                  <i class="dropdown-icon fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </span>
+                <ul class="sub-menu">
+                  <li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-basics/"
+                          title="探索 Hugo - FixIt 主题的全部内容和背后的核心概念。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 基本概念</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-content/"
+                          title="了解如何在 FixIt 主题中快速，直观地创建和组织内容。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内容</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-built-in-shortcodes/"
+                          title="Hugo 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内置 Shortcodes</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/emoji-support/"
+                          title="Hugo 和 FixIt 中的 Emoji 的用法指南。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - Emoji 支持</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/theme-documentation-content-encryption/"
+                          title="了解如何在 FixIt 主题中加密内容。"
+                          
+                        ><i class="fa-solid fa-lock fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 内容加密</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-bilibili/"
+                          title="bilibili shortcode 提供了一个内嵌的用来播放 bilibili 视频的响应式播放器。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - bilibili</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-echarts/"
+                          title="echarts shortcode 使用 ECharts 库提供数据可视化的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - echarts</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-mapbox/"
+                          title="mapbox shortcode 使用 Mapbox GL JS 库提供互动式地图的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - mapbox</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-mermaid/"
+                          title="mermaid shortcode 使用 Mermaid 库提供绘制图表和流程图的功能。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - mermaid</a>
+                      </li><li
+                        class="menu-item"
+                      >
+                        <a
+                          class="menu-link"
+                          href="/extended-shortcode-typeit/"
+                          title="typeit shortcode 基于 TypeIt 提供了打字动画。"
+                          
+                        ><i class="fa-brands fa-readme fa-fw fa-sm" aria-hidden="true"></i> 主题文档 - 扩展 Shortcode - typeit</a>
+                      </li></ul></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/friends/"
+                  title="友情链接"
+                  
+                ><i class="fa-solid fa-users fa-fw fa-sm" aria-hidden="true"></i> 友链</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/about/"
+                  
+                  
+                ><i class="fa-solid fa-info-circle fa-fw fa-sm" aria-hidden="true"></i> 关于</a></li><li
+              class="menu-item text-center"
+            ><a
+                  class="menu-link"
+                  href="https://github.com/hugo-fixit/FixIt"
+                  title="GitHub"
+                  rel="noopener noreferrer" target="_blank"
+                ><i class='fa-brands fa-github fa-fw' aria-hidden='true'></i> </a></li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li></ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container" data-page-style="normal"><aside class="toc" id="toc-auto"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content always-active" id="toc-content-auto"></div></aside>
+
+  <aside class="aside-custom">
+    </aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX">
+        <a href="https://blog.csdn.net/Destiny_shine/article/details/119104624" title="转载 -&gt; https://blog.csdn.net/Destiny_shine/article/details/119104624"target="_blank" rel="external nofollow noopener noreferrer" class="icon-repost"><i class="fa-solid fa-share fa-fw" aria-hidden="true"></i>
+    </a><span>Golang 并发编程</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="https://iiweb.cn" title="作者"target="_blank" rel="external nofollow noopener noreferrer author" class="author"><img
+    class="lazyload avatar"
+    src="/svg/loading.min.svg"
+    data-src="https://www.gravatar.com/avatar/576ab412cdcbbbcf7f2e82a508cb4022?s=32&amp;d=mp"
+    data-srcset="https://www.gravatar.com/avatar/576ab412cdcbbbcf7f2e82a508cb4022?s=32&amp;d=mp, https://www.gravatar.com/avatar/576ab412cdcbbbcf7f2e82a508cb4022?s=32&amp;d=mp 1.5x, https://www.gravatar.com/avatar/576ab412cdcbbbcf7f2e82a508cb4022?s=32&amp;d=mp 2x"
+    data-sizes="auto"
+    alt="songlin"
+    title="songlin"/>&nbsp;songlin</a></span>
+          <span class="post-category">收录于 <a href="/categories/language/"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 编程语言</a></span></div>
+      <div class="post-meta-line"><span title=2021-12-18&#32;16:15:22><i class="fa-regular fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-12-18">2021-12-18</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw" aria-hidden="true"></i> 约 6096 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw" aria-hidden="true"></i> 预计阅读 13 分钟</span>&nbsp;<span id="busuanzi_container_page_pv" class="busuanzi_visitors comment-visitors" data-flag-title="Golang 并发编程">
+              <i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv">-</span>&nbsp;次阅读
+            </span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-进程线程协程并发并行">1. 进程、线程、协程、并发、并行</a>
+      <ul>
+        <li><a href="#11-进程线程协程">1.1 进程、线程、协程</a>
+          <ul>
+            <li><a href="#111-进程">1.1.1 进程:</a></li>
+            <li><a href="#112-线程">1.1.2 线程:</a></li>
+            <li><a href="#113-携程">1.1.3 携程:</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-并发和并行">2 并发和并行</a>
+          <ul>
+            <li><a href="#21-并发">2.1 并发：</a></li>
+            <li><a href="#22-并行">2.2 并行：</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#2-goroutine">2. Goroutine</a></li>
+    <li><a href="#3-锁机制">3. 锁机制</a>
+      <ul>
+        <li><a href="#1-互斥锁mutex">1. 互斥锁mutex</a></li>
+        <li><a href="#2-读写锁">2. 读写锁</a></li>
+        <li><a href="#3-syncwaitgroup">3. sync.WaitGroup</a></li>
+      </ul>
+    </li>
+    <li><a href="#管道channel">管道channel</a>
+      <ul>
+        <li><a href="#1-channel-的声明和创建">1. channel 的声明和创建</a></li>
+        <li><a href="#2-channel-的操作">2. channel 的操作</a></li>
+        <li><a href="#3-无缓冲通道">3. 无缓冲通道</a></li>
+        <li><a href="#4-有缓冲通道">4. 有缓冲通道</a></li>
+        <li><a href="#5-如何判断通道是否已经关闭并从中取值">5. 如何判断通道是否已经关闭并从中取值</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="1-进程线程协程并发并行">1. 进程、线程、协程、并发、并行</h2>
+<h3 id="11-进程线程协程">1.1 进程、线程、协程</h3>
+<h4 id="111-进程">1.1.1 进程:</h4>
+<p>对操作系统来说，进程是资源分配的最小单位，程序启动时，操作系统就会给这个程序分配一块内存空间，对于程序本身而言它认为这是一整块连续的内存空间，称为虚拟内存空间，而实际上落实到操作系统内核时通常是一块块的内存碎片。一个进程大小可能是几个G，进程之间切换开销较大，进程可以实现操作系统的并发。</p>
+<p><figure><a class="lightgallery" href="/2023-02-10-go-concurrency/1.png" data-thumbnail="/2023-02-10-go-concurrency/1.png" data-sub-html="<h2>Alt text</h2><p>操作系统并发</p>">
+    <img
+      class="lazyload"
+      src="/svg/loading.min.svg"
+      data-src="/2023-02-10-go-concurrency/1.png"
+      data-srcset="/2023-02-10-go-concurrency/1.png, /2023-02-10-go-concurrency/1.png 1.5x, /2023-02-10-go-concurrency/1.png 2x"
+      data-sizes="auto"
+      alt="Alt text"
+      title="操作系统并发" width="409" height="249"/>
+  </a><figcaption class="image-caption">Alt text</figcaption>
+  </figure></p>
+<p>这片虚拟内存空间，可以划分为内核空间和用户空间，它们相互隔离，程序即使崩溃了，内核空间也不会受到影响。进程运行在内核空间时称为内核态，运行在用户空间称之为用户态。内核空间用于执行内核代码，用户空间只用于执行用户程序，若要执行各种IO操作，就需要通过系统调用等方式从用户态切换到内核态进入内核空间进行操作。</p>
+<p><strong>多进程并发有两个缺点</strong> ：一是内核的管理成本高，二是无法简单通过内存同步数据，进程间通信较困难。因此，多线程模式出现了。</p>
+<h4 id="112-线程">1.1.2 线程:</h4>
+<p>对操作系统来说，**线程是资源调度的最小单位，**线程是进程的一个执行单元，一个进程至少需要包含一个线程（可以包含多个），只有拥有了线程的进程才会被CPU执行。一个线程大小约是几M。线程可以实现进程内部的并发。总结起来就是：<strong>进程主要面向内存的分配管理，线程主要面向CPU的调度。</strong></p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/2.png"
+    data-srcset="/2023-02-10-go-concurrency/2.png, /2023-02-10-go-concurrency/2.png 1.5x, /2023-02-10-go-concurrency/2.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/2.png"
+    title="/2023-02-10-go-concurrency/2.png" width="215" height="294"/></p>
+<p>一个进程下的多个线程是共享这个进程的内存空间的，即线程没有自己独立的内存空间。正因如此，所以一个线程可以读、写甚至清除另一个线程的堆栈。相当于线程之间是没有保护的。但每个线程都有自己的堆栈、程序计数器、寄存器等信息，这些都不是共享的。线程也被称为轻量级进程，与进程调度类似，CPU在线程之间快速切换，就有了线程并行运行的假象。线程间的切换开销要比进程间切换小的多，因为不需要切换页表，虚拟地址空间等等一些东西。</p>
+<p>共享地址空间可以方便的共享对象，但也有一个问题，就是任何一个线程崩溃，进程中所有线程会一起崩溃。</p>
+<p>同时，多线程虽然进一步提高了并发，但在当今互联网高并发场景下，为每个任务都创建一个线程甚至是创建上万个线程来工作是不现实的，因为会消耗大量的内存，而且多线程开发要考虑很多同步竞争等问题，如锁、竞争冲突等。此外，<strong>不管是进程还是线程，它们的切换都是由内核控制的，所以线程的切换涉及到用户空间和内核空间的切换（特权模式的切换），然后需要操作系统的调度模块完成线程调度。</strong></p>
+<h4 id="113-携程">1.1.3 携程:</h4>
+<p>高并发的情况如何更好的提高CPU的利用率呢？于是协程就出现了。如一个进程可包含多个线程，一个线程也可以包含多个协程。一个协程的大小约是几KB。</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/3.png"
+    data-srcset="/2023-02-10-go-concurrency/3.png, /2023-02-10-go-concurrency/3.png 1.5x, /2023-02-10-go-concurrency/3.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/3.png"
+    title="/2023-02-10-go-concurrency/3.png" width="364" height="260"/></p>
+<p>线程可以分为 “内核态 “线程和” 用户态 “线程。一个 “用户态线程” 必须要绑定一个 “内核态线程”，但是 CPU 并不知道有 “用户态线程” 的存在，它只知道它运行的是一个 “内核态线程”。</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/4.png"
+    data-srcset="/2023-02-10-go-concurrency/4.png, /2023-02-10-go-concurrency/4.png 1.5x, /2023-02-10-go-concurrency/4.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/4.png"
+    title="/2023-02-10-go-concurrency/4.png" width="731" height="617"/></p>
+<p>然后再细化分类一下，内核线程还叫 “线程 (thread)”，用户线程叫 “协程 (co-routine)”。</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/5.png"
+    data-srcset="/2023-02-10-go-concurrency/5.png, /2023-02-10-go-concurrency/5.png 1.5x, /2023-02-10-go-concurrency/5.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/5.png"
+    title="/2023-02-10-go-concurrency/5.png" width="725" height="636"/></p>
+<p>协程它不像线程和进程那样需要进行系统内核上的上下文切换（协程切换不涉及特权模式的切换），协程切换只涉及基本的CPU上下文切换，完全在用户空间完成，做的事要比进程线程少，因此切换开销要更小。</p>
+<p>协程的优点：一是可以提高CPU利用率，避免系统内核级的线程间频繁切换造成的资源浪费；二是可以节约内存，一个进程几G、一个线程几M、一个协程几KB；三是稳定性好一些，线程可以通过内存共享数据，但是一个线程挂了，进程中所有线程会一起崩溃。</p>
+<p>协程缺点：协程本质是个单线程，它不能同时使用单个 CPU 的多个核；一旦协程出现阻塞，将会阻塞整个线程。</p>
+<h3 id="2-并发和并行">2 并发和并行</h3>
+<h4 id="21-并发">2.1 并发：</h4>
+<p>宏观上的“并行”，看起来两个程序A和B在同时运行，但是微观来看其实两个程序的指令是交织着运行的，即运行一会A在运行一会B，通过切换时间片往复交替。（并发就是你有处理多个任务的能力，但不一定同时）</p>
+<h4 id="22-并行">2.2 并行：</h4>
+<p>严格意义的同时执行。例如A和B两个程序分别运行在两个不同的cpu核上，它们互不影响。（并行就是你有同时处理多个任务的能力）</p>
+<p>可以结合下面图片来理解并发和并行：</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/6.png"
+    data-srcset="/2023-02-10-go-concurrency/6.png, /2023-02-10-go-concurrency/6.png 1.5x, /2023-02-10-go-concurrency/6.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/6.png"
+    title="/2023-02-10-go-concurrency/6.png" width="321" height="422"/></p>
+<h2 id="2-goroutine">2. Goroutine</h2>
+<p>goroutine 是 Golang 并发的核心。<strong>一个 goroutine 本质上是一个协程</strong>（其与协程的具体区别下面介绍），Go 内部帮你实现了 goroutine 之间的内存共享。执行 goroutine 只需极少的栈内存(大概4~5KB，也可按需增大和缩小)。正因如此，golang 中同时运行成千上万个并发任务也是可以的。</p>
+<p><strong>如何使用 goroutine？</strong></p>
+<p>在并发编程过程中，我们通常希望将一个过程拆分成几块，然后每个 goruntine 负责其中一块。其实，当一个 go 程序启动时，主函数就是在一个单独的 goroutine 上运行的，可以称其为 main goroutine。如果需要其他 goroutine 去干别的事，那就可以用 go 语句来创建。golang 中只需要在调用函数的时候在前面加上go关键字，就可以为这个函数创建一个 goroutine 了。开发⼈员则无需了解任何执⾏细节，只需要定义多个任务，让系统去帮我们把这些任务分配到CPU上实现并发执行即可。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;New Goroutine!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">hello</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main goroutine done!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/7.png"
+    data-srcset="/2023-02-10-go-concurrency/7.png, /2023-02-10-go-concurrency/7.png 1.5x, /2023-02-10-go-concurrency/7.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/7.png"
+    title="/2023-02-10-go-concurrency/7.png" width="338" height="78"/></p>
+<p>接下来在 hello 函数前面加上关键字 go，相当于启动一个 goroutine 去执行这个函数。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;New Goroutine!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="nf">hello</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main goroutine done!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/8.png"
+    data-srcset="/2023-02-10-go-concurrency/8.png, /2023-02-10-go-concurrency/8.png 1.5x, /2023-02-10-go-concurrency/8.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/8.png"
+    title="/2023-02-10-go-concurrency/8.png" width="355" height="63"/></p>
+<p>可以看到结果只打印了 main goroutine done!，没打印 New Goroutine!。什么原因呢？</p>
+<p>这是因为 go 程序启动时就会为 main() 函数创建一个默认的 goroutine。当 main() 函数返回的时候该 goroutine 就结束了，所有在 main() 函数中启动的 goroutine 也会跟着一起结束。</p>
+<p>因此要让 main 函数等一等 hello 函数，可以使用 time.Sleep。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">hello</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;New Goroutine!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="nf">hello</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main goroutine done!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>  <span class="c1">//等待1秒
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/9.png"
+    data-srcset="/2023-02-10-go-concurrency/9.png, /2023-02-10-go-concurrency/9.png 1.5x, /2023-02-10-go-concurrency/9.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/9.png"
+    title="/2023-02-10-go-concurrency/9.png" width="311" height="88"/></p>
+<p>从以上结果可以看到先打印 main goroutine done!，然后打印 New Goroutine!。这是因为创建新的 goroutine 需要花一些时间，而此时 main 函数的 goroutine 是一直在执行的。</p>
+<p><strong>启动多个 goroutine</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">m</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">add</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">m</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">m</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="mi">1000</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">go</span> <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;并发执行执行1000次++操作后的m：&#34;</span><span class="p">,</span><span class="nx">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="nx">m</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="mi">1000</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;顺序执行执行1000次++操作后的m：&#34;</span><span class="p">,</span><span class="nx">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/10.png"
+    data-srcset="/2023-02-10-go-concurrency/10.png, /2023-02-10-go-concurrency/10.png 1.5x, /2023-02-10-go-concurrency/10.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/10.png"
+    title="/2023-02-10-go-concurrency/10.png" width="404" height="66"/></p>
+<p>从上面结果可以看出并发执行后的结果小于1000，这是因为我们启动了多个 goroutine 去并发执行 add 函数，当 m 等于某一个值时，可能有 n 个 goroutine 读到了相同的m值，此时相当于这n个goroutine 同时对 m 变量做了一次加操作（顺序执行的话就是做了n次加操作）。</p>
+<p><strong>主函数的goroutine退出后，其它的goroutine也会自动退出</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;new goroutine: i = %d\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>   <span class="c1">//匿名函数后加()是运行这个函数的意思
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 
+</span></span><span class="line"><span class="cl">    <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;main goroutine: i = %d\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/11.png"
+    data-srcset="/2023-02-10-go-concurrency/11.png, /2023-02-10-go-concurrency/11.png 1.5x, /2023-02-10-go-concurrency/11.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/11.png"
+    title="/2023-02-10-go-concurrency/11.png" width="390" height="135"/></p>
+<p><strong>goroutine和协程的区别</strong>
+goroutine 的本质是协程。但与协程不同的是，goroutine 不完全是用户控制，一定程度上由 go 运行时（runtime）管理，好处是：当某 goroutine 阻塞时，会让出 CPU 给其他 goroutine。</p>
+<h2 id="3-锁机制">3. 锁机制</h2>
+<p>当启动多个 goroutine 并同时操作同一个资源时会发生竞态问题（数据竞态）。</p>
+<p><strong>何为竞态</strong>：当多个线程竞争同一个资源时，如果对资源的访问顺序敏感，就称存在竞态条件。导致竞态条件发生的代码区称作临界区。数据竞态问题会导致计算结果不可预期。</p>
+<p><strong>如何解决</strong>：加锁。共享资源在同一时间只能由一个线程访问（加锁），其他线程想要访问必须等当前线程访问完释放锁。</p>
+<p>举一个<strong>不加锁</strong>的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">x</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>  <span class="c1">//使用sync.WaitGroup来实现goroutine的同步
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">add</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">x</span> <span class="p">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>   <span class="c1">// goroutine结束计数-1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>    <span class="c1">// 启动一个goroutine计数+1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">go</span> <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>      <span class="c1">// 等待所有goroutine都结束
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;运行后x的值是：&#34;</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上面例子开启了两个 goroutine 去累加变量 x，这两个 goroutine 在读取和修改 x 变量时会存在数据竞争，导致最后的结果与期待的不符。多次执行结果都不同。</p>
+<h3 id="1-互斥锁mutex">1. 互斥锁mutex</h3>
+<p>它能够保证同时只有一个 goroutine 可以访问共享资源。Golang 中可以使用 sync 包的 Mutex 来实现互斥锁。修改上面的例子：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">x</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>  <span class="c1">//使用sync.WaitGroup来实现goroutine的同步
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">lock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">add</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">lock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>  <span class="c1">//加锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">x</span> <span class="p">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>  <span class="c1">//解锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>   <span class="c1">// goroutine结束计数-1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>    <span class="c1">// 启动一个goroutine计数+1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">go</span> <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="nf">add</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>      <span class="c1">// 等待所有goroutine都结束
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;运行后x的值是：&#34;</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/12.png"
+    data-srcset="/2023-02-10-go-concurrency/12.png, /2023-02-10-go-concurrency/12.png 1.5x, /2023-02-10-go-concurrency/12.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/12.png"
+    title="/2023-02-10-go-concurrency/12.png" width="292" height="64"/></p>
+<p>互斥锁能保证同一时间有且只有一个 goroutine 进入临界区，其他的 goroutine 都在等待锁；当互斥锁释放后，等待的 goroutine 才能获取锁然后进入临界区，唤醒多个同时等待的 goroutine 的策略是随机的。</p>
+<h3 id="2-读写锁">2. 读写锁</h3>
+<p>不同于互斥锁的完全互斥，<strong>读写锁比较适用于读多写少的场景</strong>，当并发的去读取一个资源无需对资源修改时是没有必要加锁的，此时读写锁是更好的选择。</p>
+<p><strong>读写锁的特点：</strong></p>
+<p>读锁定时，一个 goroutine 获得了读锁，其他 goroutine 还可以继续获得读锁，但是无法获得写锁
+写锁定时，一个 goroutine 获得了写锁，其他 goroutine 此时既不能获得读锁，也不能获得写锁
+对未被读锁定的读写锁进行读解锁，会引发 Panic
+对未被写锁定的读写锁惊醒写解锁，会引发 Panic
+举例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">rwMutex</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="nx">Data</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">RLock</span><span class="p">()</span>     <span class="c1">//读加锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">defer</span> <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">RUnlock</span><span class="p">()</span>  <span class="c1">//读解锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Read data: %v\n&#34;</span><span class="p">,</span> <span class="nx">Data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 这句代码第一次运行后，读解锁。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// 循环到第二个时，读锁定后，这个goroutine不会被阻塞，同时读成功。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">        <span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">t</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>    <span class="c1">//写加锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">defer</span> <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>  <span class="c1">//写解锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">Data</span> <span class="o">+=</span> <span class="nx">t</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Write Data: %v %d \n&#34;</span><span class="p">,</span> <span class="nx">Data</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 这句代码让写锁的效果显示出来，写锁定下需要解锁后才能写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>运行结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">2</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Read</span> <span class="nx">data</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">3</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">7</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">10</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">15</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">15</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">22</span> <span class="mi">7</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">28</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">36</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl"><span class="nx">Write</span> <span class="nx">Data</span><span class="p">:</span> <span class="mi">45</span> <span class="mi">9</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过结果可以看出读锁定后还可以继续获取读锁，但是写锁同一时间只能有一个goroutine获得。</p>
+<h3 id="3-syncwaitgroup">3. sync.WaitGroup</h3>
+<p>Golang 中可以使用 sync.WaitGroup 来实现并发任务的同步，这比在代码中使用 time.Sleep 要灵活的多。 sync.WaitGroup 有下面的方法：</p>
+<p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/13.png"
+    data-srcset="/2023-02-10-go-concurrency/13.png, /2023-02-10-go-concurrency/13.png 1.5x, /2023-02-10-go-concurrency/13.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/13.png"
+    title="/2023-02-10-go-concurrency/13.png" width="773" height="160"/></p>
+<p>sync.WaitGroup 内部维护一个计数器，当启动 n 个 goroutine 时，可以通过 Add 方法将计数器加 n，当一个 goroutine 任务结束时可以通过 Done 方法将计数器减一，最后通过 Wait() 方法等待并发任务全部执行完，当计数器值为0时，表示所有并发任务已完成。</p>
+<h2 id="管道channel">管道channel</h2>
+<p>函数在并发执行时有时需要在并发的函数之间传递数据，通常可以通过共享内存来实现，但是这种方式在不同的 goroutine 中容易发生竞态问题，要保证数据准确性就需要加锁，但是加锁又会使性能下降。golang 中提倡使用通信来共享内存而不是通过共享内存来实现通信，管道（channel）就是 golang 中不同的 goroutine 用来通信的机制，它能够保证在同一时间只有一个 goroutine 才能访问里面的数据。channel 是引用类型，它像一个队列，总是遵循先入先出的规则，这样能够保证收发数据的顺序。每一个 channel 都是一个具体类型的导管，即声明 channel 时需要为其指定元素类型。</p>
+<h3 id="1-channel-的声明和创建">1. channel 的声明和创建</h3>
+<p>声明格式：var 通道名称 chan 通道类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ch1</span> <span class="kd">chan</span> <span class="kt">int</span>      <span class="c1">// 传递整型的通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">ch2</span> <span class="kd">chan</span> <span class="kt">string</span>   <span class="c1">// 传递字符串的通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">ch3</span> <span class="kd">chan</span> <span class="p">[]</span><span class="kt">int</span> <span class="c1">// 传递int切片的通道
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于 channel 是引用类型，因此声明完之后需要使用 make 函数进行初始化，否则无法使用。channel 的创建格式：</p>
+<p>make(chan 元素类型, [缓冲大小]) ，其中缓冲的大小是可选的。</p>
+<p>举例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ch1</span> <span class="kd">chan</span> <span class="kt">int</span>   <span class="c1">//声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">ch1</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>  <span class="c1">//初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 
+</span></span><span class="line"><span class="cl"><span class="nx">ch2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>  <span class="c1">//声明加初始化简写
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="2-channel-的操作">2. channel 的操作</h3>
+<p>channel有发送、接收、关闭三种操作。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="nx">ch1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="c1">//初始化一个通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">ch1</span> <span class="o">&lt;-</span> <span class="mi">66</span>     <span class="c1">//发送：将值66发送到通道中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">res</span> <span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">ch1</span> <span class="c1">//接收：从通道中取出值并赋值给变量res
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">&lt;-</span> <span class="nx">ch1</span>        <span class="c1">//接收：接收通道的值但忽略结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nb">close</span><span class="p">(</span><span class="nx">ch1</span><span class="p">)</span>    <span class="c1">//关闭：关闭通道
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：只有在通知接收方 goroutine 所有数据都发送完成时才需要关闭通道**。通道可以被垃圾回收机制回收，它与文件关闭不同，操作结束后关闭文件是必须做的，但关闭通道不是必须。</p>
+<ul>
+<li>关闭后的channel有以下特点：</li>
+<li>对关闭的channel再进行关闭操作或引发panic</li>
+<li>对关闭的channel发送数据会引发panic</li>
+<li>对关闭的channel进行接收会一直获取值直到channel为空</li>
+<li>对关闭的且已没有值的channel再获取值会得到对应类型的零值</li>
+</ul>
+<h3 id="3-无缓冲通道">3. 无缓冲通道</h3>
+<p>无缓冲通道又称阻塞通道。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="c1">//初始化一个通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">ch1</span> <span class="o">&lt;-</span> <span class="mi">66</span>     <span class="c1">//将值66发送到通道中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;发送成功&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/14.png"
+    data-srcset="/2023-02-10-go-concurrency/14.png, /2023-02-10-go-concurrency/14.png 1.5x, /2023-02-10-go-concurrency/14.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/14.png"
+    title="/2023-02-10-go-concurrency/14.png" width="568" height="109"/></p>
+<p>上述代码运行后会出现 deadlock 错误，这是因为使用 ch1 := make(chan int) 创建的是无缓冲通道，说白了就是无缓冲通道不能存值，只有在有接收者的时候才能通过这个通道发送值。</p>
+<p>上面的代码会在ch &lt;- 66这一行阻塞形成死锁，那如何解决？</p>
+<p>一种方法是可以启用一个 goroutine 去接收值，</p>
+<p>举例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">consume</span><span class="p">()</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res</span> <span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">ch</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;接收成功&#34;</span><span class="p">,</span><span class="nx">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="nf">consume</span><span class="p">()</span> <span class="c1">//启动一个goroutine去接收值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&#34;TBD&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;发送成功&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/15.png"
+    data-srcset="/2023-02-10-go-concurrency/15.png, /2023-02-10-go-concurrency/15.png 1.5x, /2023-02-10-go-concurrency/15.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/15.png"
+    title="/2023-02-10-go-concurrency/15.png" width="211" height="71"/></p>
+<p>无缓冲通道上的发送操作会一致阻塞直到有一个 goroutine 在该通道上执行接收操作，这时才能发送成功，然后两个 goroutine 继续执行。相反，如果先执行接收操作，接收方的 goroutine 会被阻塞，直到另一个 goroutine 在该通道上发送一个值。</p>
+<p><strong>ps</strong>：无缓冲通道也被称为同步通道，因为使用其进行通信会使得发送和接收的 goroutine 同步化。</p>
+<h3 id="4-有缓冲通道">4. 有缓冲通道</h3>
+<p>解决上面 deadlock 错误的另一个方式是使用有缓冲通道。说白了就是有缓冲通道能存值，能存多少容量你自己定，但是往里存的值不能超过设定的容量。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1">//通道容量设置为1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&#34;TBD&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//ch &lt;- &#34;云集中心&#34;    //此时会报错deadlock   因为通道满了装不下了（已经装了TBD这个值）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;发送成功&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只有把通道中的值取走之后才能继续向里面发送值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ch</span> <span class="kd">chan</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&#34;TBD&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;发送成功&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res1</span> <span class="o">:=</span> <span class="o">&lt;-</span> <span class="nx">ch</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;取出通道的值res1：&#34;</span><span class="p">,</span> <span class="nx">res1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;再次向通道中发送值&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="s">&#34;云集中心&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">res2</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;再取出通道的值res2：&#34;</span><span class="p">,</span> <span class="nx">res2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+    class="lazyload"
+    src="/svg/loading.min.svg"
+    data-src="/2023-02-10-go-concurrency/16.png"
+    data-srcset="/2023-02-10-go-concurrency/16.png, /2023-02-10-go-concurrency/16.png 1.5x, /2023-02-10-go-concurrency/16.png 2x"
+    data-sizes="auto"
+    alt="/2023-02-10-go-concurrency/16.png"
+    title="/2023-02-10-go-concurrency/16.png" width="394" height="128"/></p>
+<h3 id="5-如何判断通道是否已经关闭并从中取值">5. 如何判断通道是否已经关闭并从中取值</h3>
+<p>当通道关闭后再往通道发送值会引发panic。那如何判断一个通道是否关闭并且能够优雅的从通道中取值呢？</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ch2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="c1">//开启一个goroutine将1~20发送到通道ch1中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">1</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;=</span><span class="mi">20</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">ch1</span> <span class="o">&lt;-</span> <span class="nx">i</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">close</span><span class="p">(</span><span class="nx">ch1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="c1">//开启一个goroutine从通道ch1中取出值，并将每一个值的平方发送到通道ch2中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">val</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch1</span>  <span class="c1">//从通道中取值，通道关闭后在获取值ok=false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">ch2</span> <span class="o">&lt;-</span> <span class="nx">val</span><span class="o">*</span><span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">close</span><span class="p">(</span><span class="nx">ch2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="c1">//在主goroutine中从ch2中接收值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="mi">9</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span>
+</span></span><span class="line"><span class="cl"><span class="mi">16</span>
+</span></span><span class="line"><span class="cl"><span class="mi">36</span>
+</span></span><span class="line"><span class="cl"><span class="mi">25</span>
+</span></span><span class="line"><span class="cl"><span class="mi">49</span>
+</span></span><span class="line"><span class="cl"><span class="mi">64</span>
+</span></span><span class="line"><span class="cl"><span class="mi">81</span>
+</span></span><span class="line"><span class="cl"><span class="mi">100</span>
+</span></span><span class="line"><span class="cl"><span class="mi">121</span>
+</span></span><span class="line"><span class="cl"><span class="mi">144</span>
+</span></span><span class="line"><span class="cl"><span class="mi">196</span>
+</span></span><span class="line"><span class="cl"><span class="mi">225</span>
+</span></span><span class="line"><span class="cl"><span class="mi">169</span>
+</span></span><span class="line"><span class="cl"><span class="mi">256</span>
+</span></span><span class="line"><span class="cl"><span class="mi">324</span>
+</span></span><span class="line"><span class="cl"><span class="mi">289</span>
+</span></span><span class="line"><span class="cl"><span class="mi">361</span>
+</span></span><span class="line"><span class="cl"><span class="mi">400</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>上述例子中展示了两种方式在接收值的时候判断 channel 是否被关闭，通常使用的是 for range 方式。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title=2023-02-10&#32;13:50:50>更新于 2023-02-10&nbsp;</span>
+      </div><div class="post-info-license">
+          <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span>
+        </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="/2023-02-10-go-concurrency/index.md" title="阅读原始文档" class="link-to-markdown">阅读原始文档</a></span><span><a href="https://github.com/hugo-fixit/docs/edit/main/content/posts/2023-02-10-go-concurrency/index.md" title="编辑此页"target="_blank" rel="external nofollow noopener noreferrer" class="link-to-edit">编辑此页</a></span></div>
+      <div class="post-info-share">
+        <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" data-title="Golang 并发编程" data-hashtags="golang,并发"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" data-hashtag="golang"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" data-title="Golang 并发编程"><i class="fa-brands fa-hacker-news fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" data-title="Golang 并发编程"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://fixit.lruihao.cn/2023-02-10-go-concurrency/" data-title="Golang 并发编程"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/golang/' class="post-tag">golang</a><a href='/tags/%E5%B9%B6%E5%8F%91/' class="post-tag">并发</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/theme-documentation-built-in-shortcodes/" class="post-nav-item" rel="prev" title="主题文档 - 内置 Shortcodes"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>主题文档 - 内置 Shortcodes</a>
+      <a href="/theme-documentation-content/" class="post-nav-item" rel="next" title="主题文档 - 内容">主题文档 - 内容<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus">
+          <script
+            src="https://giscus.app/client.js"
+            data-repo="hugo-fixit/FixIt"
+            data-repo-id="R_kgDOGihPtQ"
+            data-category="General"
+            data-category-id="DIC_kwDOGihPtc4CApHX"
+            data-mapping="title"
+            
+            data-theme="preferred_color_scheme"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-lang="zh-CN"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async
+            defer
+          ></script>
+        </div>
+        <noscript>
+          Please enable JavaScript to view the comments powered by <a href="https://giscus.app/" rel="external nofollow noopener noreferrer">giscus</a>.
+        </noscript></div></article></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2023</span><span class="license footer-divider"><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div><div class="footer-line statistics"><span class="site-time" title='网站运行中……'><i class="fa-solid fa-heartbeat fa-fw animate-icon" aria-hidden="true"></i><span class="run-times ms-1">网站运行中……</span></span></div><div class="footer-line visitor">
+          <span id="busuanzi_container_site_uv" title='总访客数'><i class="fa-regular fa-user fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span><span id="busuanzi_container_site_pv" class="footer-divider" title='总访问量'><i class="fa-regular fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span></span>
+        </div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><a href="https://github.com/songlin51" title="View source on GitHub"target="_blank" rel="external nofollow" class="github-corner right d-none-mobile"><svg viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><div id="mask"></div><div class="reading-progress-bar" style="left: 0;top: 0;--bg-progress: #000;--bg-progress-dark: #fff;"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/lightgallery/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><link rel="stylesheet" href="/lib/pace/themes/blue/pace-theme-minimal.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/lunr/lunr.min.js" defer></script><script src="/lib/lunr/lunr.stemmer.support.min.js" defer></script><script src="/lib/lunr/lunr.zh.min.js" defer></script><script src="/lib/lazysizes/lazysizes.min.js" async defer></script><script src="/lib/lightgallery/lightgallery.min.js" defer></script><script src="/lib/lightgallery/plugins/thumbnail/lg-thumbnail.min.js" defer></script><script src="/lib/lightgallery/plugins/zoom/lg-zoom.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/lib/cell-watermark/watermark.min.js" defer></script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async defer></script><script src="/lib/pace/pace.min.js" async defer></script><script>window.config={"autoBookmark":true,"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":10},"comment":{"enable":true,"expired":false,"giscus":{"darkTheme":"dark_dimmed","lightTheme":"light"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"enablePWA":true,"lightgallery":true,"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"},"siteTime":"2021-12-18T16:15:22+08:00","watermark":{"appendto":".wrapper\u003emain","colspacing":30,"content":"","enable":true,"fontfamily":"inherit","fontsize":0.85,"height":21,"opacity":0.0125,"rotate":15,"rowspacing":60,"width":150}};</script><script src="/js/theme.min.js" defer></script><script src="/js/custom.min.js" defer></script></body>
+</html>

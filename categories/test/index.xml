@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>测试 - 分类 - FixIt</title>
+    <title>测试 - 分类 - 松林&#39;s blog</title>
     <link>https://fixit.lruihao.cn/categories/test/</link>
-    <description>测试 - 分类 - FixIt</description>
+    <description>测试 - 分类 - 松林&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>songlin51@foxmail.com (songlin)</managingEditor>
       <webMaster>songlin51@foxmail.com (songlin)</webMaster><atom:link href="https://fixit.lruihao.cn/categories/test/" rel="self" type="application/rss+xml" /></channel>
 </rss>

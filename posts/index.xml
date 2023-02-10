@@ -1,10 +1,18 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>所有文章 - FixIt</title>
+    <title>所有文章 - 松林&#39;s blog</title>
     <link>https://fixit.lruihao.cn/posts/</link>
-    <description>所有文章 | FixIt</description>
+    <description>所有文章 | 松林&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>songlin51@foxmail.com (songlin)</managingEditor>
       <webMaster>songlin51@foxmail.com (songlin)</webMaster><lastBuildDate>Wed, 20 Jul 2022 13:56:03 &#43;0800</lastBuildDate><atom:link href="https://fixit.lruihao.cn/posts/" rel="self" type="application/rss+xml" /><item>
+  <title>Golang 并发编程</title>
+  <link>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</link>
+  <pubDate>Sat, 18 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>songlin</author>
+  <guid>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</guid>
+  <description><![CDATA[1. 进程、线程、协程、并发、并行 1.1 进程、线程、协程 1.1.1 进程: 对操作系统来说，进程是资源分配的最小单位，程序启动时，操作系统就会给这个程序分配一块]]></description>
+</item>
+<item>
   <title>主题文档 - 扩展 Shortcode - bilibili</title>
   <link>https://fixit.lruihao.cn/extended-shortcode-bilibili/</link>
   <pubDate>Wed, 20 Jul 2022 13:55:03 &#43;0800</pubDate>
@@ -104,6 +112,14 @@
   <description><![CDATA[<p>了解如何在 <strong>FixIt</strong> 主题中快速，直观地创建和组织内容。</p>]]></description>
 </item>
 <item>
+  <title>Golang 并发编程</title>
+  <link>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</link>
+  <pubDate>Sat, 18 Dec 2021 16:15:22 &#43;0800</pubDate>
+  <author>songlin</author>
+  <guid>https://fixit.lruihao.cn/2023-02-10-go-concurrency/</guid>
+  <description><![CDATA[1. 进程、线程、协程、并发、并行 1.1 进程、线程、协程 1.1.1 进程: 对操作系统来说，进程是资源分配的最小单位，程序启动时，操作系统就会给这个程序分配一块]]></description>
+</item>
+<item>
   <title>主题文档 - 内置 Shortcodes</title>
   <link>https://fixit.lruihao.cn/theme-documentation-built-in-shortcodes/</link>
   <pubDate>Sun, 19 Dec 2021 16:15:22 &#43;0800</pubDate>
@@ -161,14 +177,6 @@
   <author>Lruihao</author>
   <guid>https://fixit.lruihao.cn/theme-documentation-content-encryption/</guid>
   <description><![CDATA[<p>了解如何在 FixIt 主题中加密内容。</p>]]></description>
-</item>
-<item>
-  <title>Markdown 基本语法</title>
-  <link>https://fixit.lruihao.cn/basic-markdown-syntax/</link>
-  <pubDate>Sat, 18 Dec 2021 16:15:22 &#43;0800</pubDate>
-  <author>songlin</author>
-  <guid>https://fixit.lruihao.cn/basic-markdown-syntax/</guid>
-  <description><![CDATA[<p>这篇文章提供了可以在 Hugo 的文章中使用的基本 Markdown 语法示例。</p>]]></description>
 </item>
 </channel>
 </rss>
